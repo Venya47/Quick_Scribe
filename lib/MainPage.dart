@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quick_scribe/new_or_edit_note_page.dart';
+import 'package:quick_scribe/widgets/note_icon_button.dart';
+import 'package:quick_scribe/widgets/note_icon_button_outlined.dart';
 import 'constants.dart';
 
 class MainPage extends StatefulWidget {
@@ -20,16 +23,16 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         title: Center(child: Text("Quick Scribe...",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.brown),)),
         actions: [
-          IconButton(onPressed: (){},
-              style: IconButton.styleFrom(
-                  backgroundColor: primary,
-                  foregroundColor: white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side: BorderSide(color: black))),
-         icon:FaIcon(FontAwesomeIcons.rightFromBracket)),
+          NoteIconButtonOutlined(
+              icon: FontAwesomeIcons.rightFromBracket,
+              onPressed: (){}
+          ),
         ],
         backgroundColor: Colors.yellow[300],
       ),
-      floatingActionButton: FloatingActionButton.large(onPressed: (){},child: FaIcon(FontAwesomeIcons.plus),),
+      floatingActionButton: FloatingActionButton.large(onPressed: (){
+        Navigator.push(context,MaterialPageRoute(builder: (context)=>NewOrEditNotePage()));},
+        child: FaIcon(FontAwesomeIcons.plus),backgroundColor: primary,),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -52,20 +55,9 @@ class _MainPageState extends State<MainPage> {
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Row(
                 children: [
-                  IconButton(
-                      onPressed: (){
-                        setState(() {
-                          isDesc=!isDesc;
-                        });
-                      },
-                      icon: FaIcon(isDesc? FontAwesomeIcons.arrowDown:FontAwesomeIcons.arrowUp),
-                    padding: EdgeInsets.zero,
-                    visualDensity: VisualDensity.compact,
-                    constraints: BoxConstraints(),
-                    style: IconButton.styleFrom(tapTargetSize:MaterialTapTargetSize.shrinkWrap ),
-                    iconSize: 18,
-                    color: gray700,
-                  ),
+                  NoteIconButton(size:18,Icon: isDesc? FontAwesomeIcons.arrowDown:FontAwesomeIcons.arrowUp, onPressed: (){setState(() {
+                    isDesc=!isDesc;
+                  });}),
                   SizedBox(width: 16,),
                   DropdownButton(
                       value:ddvalue,
